@@ -12,4 +12,4 @@ metron==0.1
 django-user-accounts==1.0b3
 
 pinax-utils==1.0b1.dev3
-pinax-theme-foundation==0.2a2
+pinax-theme-foundation==0.2.1
