@@ -10,6 +10,9 @@ To Use ::
     $ cd [your_project_name]
     $ mkvirtualenv [your_project_name] && workon [your_project_name]
     $ pip install -r requirements.txt
+    $ python manage.py syncdb
+    $ npm -g install yuglify
+    $ python manage.py collectstatic
 
 This project template provides :
 
