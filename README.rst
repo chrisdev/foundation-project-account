@@ -6,7 +6,13 @@ A Django starter project based on `Zurb Foundation <http://foundation.zurb.com>`
 
 To Use ::
 
-    $ django-admin.py startproject [your_project_name] --template=https://github.com/chrisdev/foundation-project-account/zipball/master
+    $ django-admin.py startproject [your_project_name] --template=https://github.com/justhamade/foundation-project-account/archive/master.zip
+    $ cd [your_project_name]
+    $ mkvirtualenv [your_project_name] && workon [your_project_name]
+    $ pip install -r requirements.txt
+    $ python manage.py syncdb
+    $ npm -g install yuglify
+    $ python manage.py collectstatic
 
 This project template provides :
 
@@ -20,7 +26,7 @@ This project template provides :
 Apps included:
 
  * django-debug-toolbar
- * django_compressor
+ * django-pipeline
  * pinax-utils
  * pinax-theme-foundation
  * metron==0.1
