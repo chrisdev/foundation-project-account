@@ -95,7 +95,7 @@ MIDDLEWARE_CLASSES = [
     "pipeline.middleware.MinifyHTMLMiddleware",
 ]
 
-ROOT_URLCONF = "foundationtest.urls"
+ROOT_URLCONF = "{{ project_name }}.urls"
 
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_ROOT, "templates"),
