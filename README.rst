@@ -6,13 +6,15 @@ A Django starter project based on `Zurb Foundation <http://foundation.zurb.com>`
 
 To Use ::
 
-    $ django-admin.py startproject [your_project_name] --template=https://github.com/justhamade/foundation-project-account/archive/master.zip
-    $ cd [your_project_name]
-    $ mkvirtualenv [your_project_name] && workon [your_project_name]
-    $ pip install -r requirements.txt
-    $ python manage.py syncdb
-    $ npm -g install yuglify
-    $ python manage.py collectstatic
+    export PROJECT_NAME=[your_project_name]
+    mkvirtualenv $PROJECT_NAME && workon $PROJECT_NAME
+    pip install Django<1.4
+    mkdir $PROJECT_NAME
+    django-admin.py startproject $PROJECT_NAME --template=https://github.com/justhamade/foundation-project-account/archive/master.zip $PROJECT_NAME
+    cd $PROJECT_NAME
+    pip install -r requirements.txt
+    python manage.py syncdb --noinput
+    python manage.py collectstatic --noinput
 
 This project template provides :
 
@@ -20,6 +22,7 @@ This project template provides :
  * initial data (for handling ``sites.Site`` model)
  * project requirements files for use with pip_
  * a home for your site static files
+ * automatically compressed and minified JS, CSS and HTML via django-pipeline
  * basic templates designed to work with the foundation theme
 
 
