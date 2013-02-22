@@ -3,6 +3,16 @@
 {% load metron_tags %}
 {% load i18n %}
 
+{% block style_base %}
+    {% compressed_css 'foundation' %}
+    <!--[if lt IE 9]>
+    {% compressed_css 'foundation_ie8' %}
+    <![endif]-->
+    <!--[if lt IE 8]>
+    {% compressed_css 'foundation_ie7' %}
+    <![endif]-->
+{% endblock %}
+
 {% block extra_head_base %}
     {% block extra_head %}{% endblock %}
 {% endblock %}
@@ -17,3 +27,7 @@
     {% analytics %}
     {% block extra_body %}{% endblock %}
 {% endblock %}
+
+{% block script_base %}
+    {% compressed_js 'foundation' %}
+{% endcomment %}
