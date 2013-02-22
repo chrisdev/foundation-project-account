@@ -195,6 +195,12 @@ PIPELINE_CSS = {
         ),
         "output_filename": "foundation_ie7.css",
     },
+    "foundation_ie8": {
+        "source_filenames": (
+            "foundation/css/fonts/accessibility_ie.css",
+        ),
+        "output_filename": "foundation_ie8.css",
+    },
 }
 
 PIPELINE_JS = {
