@@ -12,12 +12,6 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "apps"))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# tells Pinax to serve media through the staticfiles app.
-SERVE_MEDIA = DEBUG
-
-# django-compressor is turned off by default due to deployment overhead for
-# most users. See <URL> for more information
-COMPRESS = False
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -74,25 +68,13 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "site_media", "static")
 # Example: "http://media.lawrence.com"
 STATIC_URL = "/site_media/static/"
 
-# Additional directories which hold static files
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, "static"),
-]
 
-STATICFILES_FINDERS = [
-    "staticfiles.finders.FileSystemFinder",
-    "staticfiles.finders.AppDirectoriesFinder",
-    "staticfiles.finders.LegacyAppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
-]
+STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
-
-# Subdirectory of COMPRESS_ROOT to store the cached media files in
-COMPRESS_OUTPUT_DIR = "cache"
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = "lts8n*nw7shur_4=q-c$ui!d(&!1$iagy3&tw2_ni#lnd-_*72"
@@ -110,6 +92,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "pipeline.middleware.MinifyHTMLMiddleware",
 ]
 
 ROOT_URLCONF = "{{ project_name }}.urls"
@@ -127,7 +110,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "pinax_utils.context_processors.settings", 
-    "staticfiles.context_processors.static",
     "account.context_processors.account",
 ]
 
@@ -140,14 +122,14 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.staticfiles",
     
     
     # theme
     "pinax_theme_foundation",
     
     # external
-    "staticfiles",
-    "compressor",
+    "pipeline",
     "debug_toolbar",
     "metron",
  
@@ -187,3 +169,71 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+PIPELINE_COMPILERS = (
+)
+PIPELINE_CSS = {
+    "foundation": {
+        "source_filenames": (
+            "foundation/css/app.css",
+            "foundation/css/foundation.css",
+            "foundation/css/responsive-tables.css",
+            "foundation/css/fc-webicons.css",
+            "foundation/css/fonts/accessibility.css",
+            "foundation/css/fonts/general_enclosed.css",
+            "foundation/css/fonts/social.css",
+            "foundation/css/fonts/general.css",
+        ),
+        "output_filename": "foundation.css",
+    },
+    "foundation_ie7": {
+        "source_filenames": (
+            "foundation/css/fonts/accessibility_ie7.css",
+            "foundation/css/fonts/general_enclosed_ie7.css",
+            "foundation/css/fonts/general_ie7.css",
+            "foundation/css/fonts/social_ie7.css",
+        ),
+        "output_filename": "foundation_ie7.css",
+    },
+    "foundation_ie8": {
+        "source_filenames": (
+            "foundation/css/fonts/accessibility_ie.css",
+        ),
+        "output_filename": "foundation_ie8.css",
+    },
+}
+
+PIPELINE_JS = {
+    "foundation": {
+        "source_filenames": (
+             "foundation/js/jquery.js",
+             "foundation/js/jquery.foundation.mediaQueryToggle.js",
+             "foundation/js/jquery.foundation.forms.js",
+             "foundation/js/jquery.event.move.js",
+             "foundation/js/jquery.event.swipe.js",
+             "foundation/js/jquery.foundation.reveal.js",
+             "foundation/js/jquery.foundation.orbit.js",
+             "foundation/js/jquery.foundation.navigation.js",
+             "foundation/js/jquery.foundation.buttons.js",
+             "foundation/js/jquery.foundation.tabs.js",
+             "foundation/js/jquery.foundation.tooltips.js",
+             "foundation/js/jquery.foundation.accordion.js",
+             "foundation/js/jquery.placeholder.js",
+             "foundation/js/jquery.foundation.alerts.js",
+             "foundation/js/jquery.foundation.topbar.js",
+             "foundation/js/jquery.foundation.joyride.js",
+             "foundation/js/jquery.foundation.clearing.js",
+             "foundation/js/jquery.foundation.magellan.js",
+             "foundation/js/responsive-tables.js",
+             "foundation/js/app.js",
+        ),
+        "output_filename": "foundation.js",
+    },
+    "pinax": {
+        "source_filenames": (
+          "pinax/js/*.js",
+        ),
+        "output_filename": "pinax.js",
+    }
+}
+

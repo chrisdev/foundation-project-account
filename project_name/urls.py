@@ -1,7 +1,6 @@
-from django.conf import settings
 from django.conf.urls.defaults import *
-from django.conf.urls.static import static
 from django.views.generic.simple import direct_to_template
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.contrib import admin
 admin.autodiscover()
@@ -15,10 +14,8 @@ urlpatterns = patterns("",
     }, name="home"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("account.urls")),
+    url(r"^foundation/", include("pinax_theme_foundation.urls")),
+
 )
 
-
-if settings.SERVE_MEDIA:
-    urlpatterns += patterns("",
-        url(r"", include("staticfiles.urls")),
-    )+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
